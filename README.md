@@ -16,4 +16,5 @@ and vehicle types.
   
 The version of the deployments are 2.12 for Scala and 2.4.4 for Spark. All of them
 can be obtained in the [official webpage](https://spark.apache.org/downloads.html).
+The dataset used for this project can be downloaded from [Kaggle](https://www.kaggle.com/new-york-city/nypd-motor-vehicle-collisions).
 
