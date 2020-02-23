@@ -1,3 +1,6 @@
+# Prevent from uploading datasets
+files/
+
 # Eclipse.gitignore
 
 .metadata
