@@ -18,8 +18,10 @@ public class CarAccidents {
 		
 		final Dataframe df = new Dataframe(spark, file);
 		
-		df.q1().show();
-
+		// df.q1().show();
+		// df.q2().show();
+		// df.q3().show();
+		
 		spark.close();
 
 	}
