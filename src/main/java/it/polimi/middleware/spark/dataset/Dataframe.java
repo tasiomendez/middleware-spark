@@ -1,8 +1,9 @@
 package it.polimi.middleware.spark.dataset;
 
 import static org.apache.spark.sql.functions.count;
-import static org.apache.spark.sql.functions.expr;
 import static org.apache.spark.sql.functions.date_sub;
+import static org.apache.spark.sql.functions.expr;
+import static org.apache.spark.sql.functions.mean;
 import static org.apache.spark.sql.functions.next_day;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class Dataframe {
 	private Dataset<Row> raw;
 
 	public Dataframe (SparkSession spark, String file) {
+		
+		logger.info("Reading dataset from " + file);
 
 		final List<StructField> fields = new ArrayList<>();
 		for (Columns col: Columns.values()) 
@@ -181,7 +184,39 @@ public class Dataframe {
 	 */
 
 	public Dataset<Row> q3() {
-		return null;
+		
+		final List<String> join = new ArrayList<String>();
+		join.add(Columns.BOROUGH.getName());
+		join.add("WEEK");
+		
+		final Dataset<Row> df1 = this.groupBoroughsByWeek(this.clean(), "N_ACCIDENTS", false);
+		final Dataset<Row> df2 = this.groupBoroughsByWeek(this.clean(), "N_LETHAL_ACCIDENTS", true);
+		
+		return df1.join(df2, JavaConversions.asScalaBuffer(join), "full_outer")
+				.na().fill(0).orderBy(Columns.BOROUGH.getName(), "WEEK");
+	}
+	
+	public Dataset<Row> q3mean() {
+		return q3().groupBy(Columns.BOROUGH.getName()).agg(
+				mean("N_LETHAL_ACCIDENTS").alias("MEAN_LETHAL_ACCIDENTS"));
+	}
+	
+	/**
+	 * Group dataframe by boroughs and week.
+	 * 
+	 * @param dataframe
+	 * @param alias new column name
+	 * @param filtered true for filtering, otherwise false 
+	 * @return dataframe
+	 */
+	
+	private Dataset<Row> groupBoroughsByWeek(Dataset<Row> dataframe, String alias, Boolean filtered) {
+		final Dataset<Row> df = (filtered) ? dataframe.filter(Dataframe::killed) : dataframe;
+		return df.filter(df.col(Columns.BOROUGH.getName()).isNotNull())
+				.withColumn("WEEK", next_day(date_sub(df.col(Columns.DATE.getName()), 1), FIRST_DAY_WEEK))
+				.groupBy(Columns.BOROUGH.getName(), "WEEK").agg(
+						count("WEEK").alias(alias))
+				.orderBy(Columns.BOROUGH.getName(), "WEEK");
 	}
 
 }
