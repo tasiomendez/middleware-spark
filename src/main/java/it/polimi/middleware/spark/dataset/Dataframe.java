@@ -222,5 +222,21 @@ public class Dataframe {
 						count("WEEK").alias(alias))
 				.orderBy(Columns.BOROUGH.getName(), "WEEK");
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Dataset<Row> run(String func) {
+		logger.info("Starting data processing...");
+		double start = System.currentTimeMillis();
+		Dataset<Row> df = null;
+		try {
+			df = (Dataset<Row>) Dataframe.class.getMethod(func).invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		double time = (System.currentTimeMillis() - start) / 1000;
+		logger.info("Data processed in " + time + " seconds");
+		return df;
+	}
 
 }
