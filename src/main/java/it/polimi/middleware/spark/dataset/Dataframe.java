@@ -32,8 +32,6 @@ public class Dataframe {
 	private Dataset<Row> raw;
 
 	public Dataframe (SparkSession spark, String file) {
-		
-		logger.info("Reading dataset from " + file);
 
 		final List<StructField> fields = new ArrayList<>();
 		for (Columns col: Columns.values()) 
@@ -41,11 +39,17 @@ public class Dataframe {
 
 		final StructType schema = DataTypes.createStructType(fields);
 
+		logger.info("Reading dataset from " + file);
+		double start = System.currentTimeMillis();
+
 		this.raw = spark.read()
 				.option("header", "true")
 				.option("delimiter", ",")
 				.option("dateFormat", DATE_FORMAT)
 				.schema(schema).csv(file);
+		
+		double time = (System.currentTimeMillis() - start) / 1000;
+		logger.info("File read in " + time + " seconds");
 
 	}
 	
