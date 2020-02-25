@@ -232,7 +232,7 @@ public class Dataframe {
 			df = (Dataset<Row>) Dataframe.class.getMethod(func).invoke(this);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
+			System.exit(1);
 		}
 		double time = (System.currentTimeMillis() - start) / 1000;
 		logger.info("Data processed in " + time + " seconds");
