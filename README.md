@@ -21,7 +21,8 @@ The dataset used for this project can be downloaded from [Kaggle](https://www.ka
 ## Usage
 
 ```shell
-usage: CarAccidents [-f <FILE>] [-m <ADDRESS>] [-q <QUESTION>] [-s <X>]
+usage: CarAccidents [-c] [-f <FILE>] [-m <ADDRESS>] -q <QUESTION> [-s <X>]
+ -c,--cached                cached dataframes on spark slaves
  -f,--file <FILE>           CSV file
  -m,--master <ADDRESS>      spark master address
  -q,--question <QUESTION>   data to access

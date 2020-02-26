@@ -21,9 +21,6 @@ public class CarAccidents {
 
 	public static void main(String[] args) {
 		Logger.getLogger("org").setLevel(Level.OFF);
-
-//		final String master = args.length > 0 ? args[0] : "local[1]";
-//		final String file = args.length > 1 ? args[1] : "./files/NYPD_Motor_Vehicle_Collisions.csv";
 		
 		final Options options = new Options();
 		final CommandLineParser parser = new DefaultParser();
@@ -42,6 +39,9 @@ public class CarAccidents {
 		final Option _question = new Option("q", "question", true, "data to access");
 		_question.setType(String.class);
 		_question.setArgName("QUESTION");
+		_question.setArgs(Option.UNLIMITED_VALUES);
+		_question.setValueSeparator(' ');
+		_question.setRequired(true);
 		options.addOption(_question);
 		
 		final Option _show = new Option("s", "show", true, "show X results");
@@ -49,24 +49,28 @@ public class CarAccidents {
 		_show.setArgName("X");
 		_show.setOptionalArg(true);
 		options.addOption(_show);
+		
+		final Option _cached = new Option("c", "cached", false, "cached dataframes on spark slaves");
+		options.addOption(_cached);
 			    
 	    try {
 	    	
 			final CommandLine cmd = parser.parse(options, args);
 			final String master = cmd.getOptionValue("spark", "local[1]");
 			final String file = cmd.getOptionValue("file", "./files/NYPD_Motor_Vehicle_Collisions.csv");
-			final String question = cmd.getOptionValue("question", "q1");			
+			final String[] questions = cmd.getOptionValues("question");			
 			final int show = Integer.parseInt(cmd.getOptionValue("show", "-1"));
 			
 			final SparkSession spark = SparkSession.builder().master(master)
 					.appName(APP_NAME).getOrCreate();
 			logger.info("Spark session created succesfully");
 			
-			final Dataframe df = new Dataframe(spark, file);
+			final Dataframe df = new Dataframe(spark, file, cmd.hasOption("cached"));
 			
-			if (cmd.hasOption("show"))
-				Dataframe.show(df.run(question), show, false);
-			else df.run(question);
+			for (int i = 0; i < questions.length; i++)
+				if (cmd.hasOption("show"))
+					Dataframe.show(df.run(questions[i]), show, false);
+				else df.run(questions[i]);
 			
 			spark.close();
 			logger.info("Spark session closed succesfully");

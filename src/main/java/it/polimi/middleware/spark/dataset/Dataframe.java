@@ -31,7 +31,7 @@ public class Dataframe {
 	
 	private Dataset<Row> raw;
 
-	public Dataframe (SparkSession spark, String file) {
+	public Dataframe (SparkSession spark, String file, Boolean cached) {
 
 		final List<StructField> fields = new ArrayList<>();
 		for (Columns col: Columns.values()) 
@@ -47,6 +47,9 @@ public class Dataframe {
 				.option("delimiter", ",")
 				.option("dateFormat", DATE_FORMAT)
 				.schema(schema).csv(file);
+		
+		if (cached)
+			this.raw.cache();
 		
 		double time = (System.currentTimeMillis() - start) / 1000;
 		logger.info("File read in " + time + " seconds");
@@ -233,7 +236,7 @@ public class Dataframe {
 	
 	@SuppressWarnings("unchecked")
 	public Dataset<Row> run(String func) {
-		logger.info("Starting data processing...");
+		logger.info("Starting data processing for " + func + "...");
 		double start = System.currentTimeMillis();
 		Dataset<Row> df = null;
 		try {
