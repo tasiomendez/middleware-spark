@@ -223,6 +223,14 @@ public class Dataframe {
 				.orderBy(Columns.BOROUGH.getName(), "WEEK");
 	}
 	
+	/**
+	 * Runs function passed as parameter. It could be q1, q2, q3, q3mean, which answer
+	 * the questions raised.
+	 * 
+	 * @param func function to run
+	 * @return result dataframe
+	 */
+	
 	@SuppressWarnings("unchecked")
 	public Dataset<Row> run(String func) {
 		logger.info("Starting data processing...");
@@ -237,6 +245,24 @@ public class Dataframe {
 		double time = (System.currentTimeMillis() - start) / 1000;
 		logger.info("Data processed in " + time + " seconds");
 		return df;
+	}
+	
+	/**
+	 * Displays the Dataset in a tabular form.
+	 * 
+	 * @param dataframe 
+	 * @param numRows number of rows to show
+	 * @param truncate if true strings more than 20 characters will
+	 *                 be truncated and all cells will be aligned right
+	 */
+	
+	public static void show(Dataset<Row> dataframe, int numRows, boolean truncate) {
+		logger.info("Data processing for display...");
+		double start = System.currentTimeMillis();
+		if (numRows < 0) dataframe.show(truncate);
+		else dataframe.show(numRows, truncate);
+		double time = (System.currentTimeMillis() - start) / 1000;
+		logger.info("Data processed for display in " + time + " seconds");
 	}
 
 }

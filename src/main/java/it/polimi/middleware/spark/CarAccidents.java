@@ -64,10 +64,8 @@ public class CarAccidents {
 			
 			final Dataframe df = new Dataframe(spark, file);
 			
-			if (show < 0 && cmd.hasOption("show"))
-				df.run(question).show(false);
-			else if (show > 0)
-				df.run(question).show(show, false);
+			if (cmd.hasOption("show"))
+				Dataframe.show(df.run(question), show, false);
 			else df.run(question);
 			
 			spark.close();
