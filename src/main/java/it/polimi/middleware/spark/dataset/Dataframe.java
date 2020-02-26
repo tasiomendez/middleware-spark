@@ -48,8 +48,10 @@ public class Dataframe {
 				.option("dateFormat", DATE_FORMAT)
 				.schema(schema).csv(file);
 		
-		if (cached)
+		if (cached) {
+			logger.info("Caching raw dataframe...");
 			this.raw.cache();
+		}
 		
 		double time = (System.currentTimeMillis() - start) / 1000;
 		logger.info("File read in " + time + " seconds");
