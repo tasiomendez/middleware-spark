@@ -1,0 +1,2 @@
+# Prevent from including unused files on docker container 
+target/
