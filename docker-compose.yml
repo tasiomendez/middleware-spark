@@ -19,6 +19,7 @@ services:
     environment:
       - SPARK_PUBLIC_DNS=192.168.99.103
       - SPARK_MASTER_HOST=spark-master
+      - SPARK_WORKER_WEBUI_PORT=8081
     ports:
       # - 8081-8090:8081
       - 8081:8081
@@ -38,5 +39,3 @@ services:
       - spark-master
     command: ["target/middleware-spark-0.0.1-SNAPSHOT-jar-with-dependencies.jar",
              "--question", "q3", "--cached"]
-
-    # https://github.com/big-data-europe/docker-hadoop-spark-workbench
