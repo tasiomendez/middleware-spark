@@ -1,0 +1,42 @@
+version: '3'
+services:
+  spark-master:
+    build: docker/master
+    image: middleware/spark-master:2.4.4-hadoop2.7
+    hostname: spark-master
+    environment:
+      - SPARK_PUBLIC_DNS=192.168.99.103
+    ports:
+      - 4040:4040
+      - 6066:6066
+      - 7077:7077
+      - 8080:8080
+
+  spark-worker:
+    build: docker/worker
+    image: middleware/spark-worker:2.4.4-hadoop2.7
+    hostname: spark-worker
+    environment:
+      - SPARK_PUBLIC_DNS=192.168.99.103
+      - SPARK_MASTER_HOST=spark-master
+    ports:
+      # - 8081-8090:8081
+      - 8081:8081
+    depends_on:
+      - spark-master
+
+  spark-app:
+    build: .
+    image: middleware/spark-app:latest
+    hostname: spark-app
+    environment:
+      - SPARK_PUBLIC_DNS=192.168.99.103
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+      - JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv
+    depends_on:
+      - spark-master
+    command: ["target/middleware-spark-0.0.1-SNAPSHOT-jar-with-dependencies.jar",
+             "--question", "q3", "--cached"]
+
+    # https://github.com/big-data-europe/docker-hadoop-spark-workbench
