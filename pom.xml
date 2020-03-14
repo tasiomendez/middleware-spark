@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spark.version>2.4.4</spark.version>
 		<log4j.version>1.2.17</log4j.version>
-		<commonscli.version>1.4</commonscli.version>
+		<commonscli.version>1.2</commonscli.version>
 	</properties>
 
 	<build>

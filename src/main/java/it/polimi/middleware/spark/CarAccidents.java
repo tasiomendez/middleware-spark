@@ -2,7 +2,7 @@ package it.polimi.middleware.spark;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -23,7 +23,7 @@ public class CarAccidents {
 		Logger.getLogger("org").setLevel(Level.OFF);
 		
 		final Options options = new Options();
-		final CommandLineParser parser = new DefaultParser();
+		final CommandLineParser parser = new GnuParser();
 		final HelpFormatter formatter = new HelpFormatter();
 		
 		final Option _master = new Option("m", "master", true, "spark master address");
@@ -56,7 +56,7 @@ public class CarAccidents {
 	    try {
 	    	
 			final CommandLine cmd = parser.parse(options, args);
-			final String master = cmd.getOptionValue("spark", "local[1]");
+			final String master = cmd.getOptionValue("master", "local[1]");
 			final String file = cmd.getOptionValue("file", "./files/NYPD_Motor_Vehicle_Collisions.csv");
 			final String[] questions = cmd.getOptionValues("question");			
 			final int show = Integer.parseInt(cmd.getOptionValue("show", "-1"));
