@@ -21,11 +21,11 @@ if [ "$SPARK_WOKER_HOST" = "" ]; then
   SPARK_WOKER_HOST=`hostname`
 fi
 
-if [ "$SPARK_MASTER_WEBUI_PORT" = "" ]; then
-  SPARK_MASTER_WEBUI_PORT=8080
+if [ "$SPARK_WORKER_WEBUI_PORT" = "" ]; then
+  SPARK_WORKER_WEBUI_PORT=8081
 fi
 
 $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker \
   --host $SPARK_WOKER_HOST \
-  --webui-port $SPARK_MASTER_WEBUI_PORT \
+  --webui-port $SPARK_WORKER_WEBUI_PORT \
   spark://$SPARK_MASTER_HOST:$SPARK_MASTER_PORT
