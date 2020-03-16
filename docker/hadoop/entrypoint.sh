@@ -5,7 +5,7 @@ echo "export JAVA_HOME=$JAVA_HOME" >> $HOME/.bashrc
 
 # Configuration of hadoop host
 if [ -z "${HADOOP_HOST}" ]; then
-  export HADOOP_HOST=`hostname`
+  export HADOOP_HOST=$(hostname -I)
 fi
 
 if [ -z "${HADOOP_PORT}" ]; then
