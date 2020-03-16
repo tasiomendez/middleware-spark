@@ -48,18 +48,19 @@ cd docker
 sh build.sh base      # Build base image
 sh build.sh master    # Build master image
 sh build.sh worker    # Build worker image
+sh build.sh hadoop    # Build hadoop image
 ```
 
 To deploy a simple Spark standalone cluster, run the following command.
 
 ```shell
-docker-compose up spark-master spark-worker
+docker-compose up spark-master spark-worker hadoop
 ```
 
 For scaling the number of workers, the following command will setup one master and `X` workers.
 
 ```shell
-docker-compose up spark-master spark-worker --scale spark-worker=X
+docker-compose up spark-master spark-worker hadoop --scale spark-worker=X
 ```
 
 ### Submitting jobs
