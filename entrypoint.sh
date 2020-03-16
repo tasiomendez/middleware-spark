@@ -24,6 +24,11 @@ fi
 $HADOOP_HOME/bin/hdfs dfs -fs hdfs://$HADOOP_HOST:$HADOOP_PORT -mkdir -p /spark
 $HADOOP_HOME/bin/hdfs dfs -fs hdfs://$HADOOP_HOST:$HADOOP_PORT -put -f $JAVA_PROJECT_DATASET /spark/dataset.csv
 
+echo '>>' connecting to Master @ spark://$SPARK_MASTER_HOST:$SPARK_MASTER_PORT
+echo '>>' file submited @ hdfs://$HADOOP_HOST:$HADOOP_PORT
+echo '>>' deploy mode: $SPARK_DEPLOY_MODE
+echo '>>' java jar file loaded from $APPLICATION_JAR_FILE
+
 $SPARK_HOME/bin/spark-submit \
   --master spark://$SPARK_MASTER_HOST:$SPARK_MASTER_PORT \
   --deploy-mode $SPARK_DEPLOY_MODE \
