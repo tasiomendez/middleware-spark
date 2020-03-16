@@ -14,11 +14,11 @@ if [ "$SPARK_MASTER_PORT" = "" ]; then
 fi
 
 if [ "$SPARK_MASTER_HOST" = "" ]; then
-  SPARK_MASTER_HOST=`hostname`
+  SPARK_MASTER_HOST=$(hostname -I)
 fi
 
-if [ "$SPARK_WOKER_HOST" = "" ]; then
-  SPARK_WOKER_HOST=`hostname`
+if [ "$SPARK_WORKER_HOST" = "" ]; then
+  SPARK_WORKER_HOST=$(hostname -I)
 fi
 
 if [ "$SPARK_WORKER_WEBUI_PORT" = "" ]; then
@@ -26,6 +26,6 @@ if [ "$SPARK_WORKER_WEBUI_PORT" = "" ]; then
 fi
 
 $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker \
-  --host $SPARK_WOKER_HOST \
+  --host $SPARK_WORKER_HOST \
   --webui-port $SPARK_WORKER_WEBUI_PORT \
   spark://$SPARK_MASTER_HOST:$SPARK_MASTER_PORT
