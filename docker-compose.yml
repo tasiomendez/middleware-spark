@@ -36,7 +36,20 @@ services:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_MASTER_PORT=7077
       - JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv
+      - HADOOP_HOST=hadoop
+      - HADOOP_PORT=9000
     depends_on:
       - spark-master
     command: ["target/middleware-spark-0.0.1-SNAPSHOT-jar-with-dependencies.jar",
              "--question q3 q3mean --show 30"]
+
+  hadoop:
+    build: docker/hadoop
+    image: middleware/spark-hadoop:2.4.4-hadoop2.7
+    hostname: hadoop
+    environment:
+      - HADOOP_HOST=hadoop
+      - HADOOP_PORT=9000
+    ports:
+      - 50070:50070
+      - 9000:9000
