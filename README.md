@@ -85,52 +85,52 @@ For running spark without Docker Compose, i.e. running images in different machi
 **Spark Master**
 
 ```shell
-docker run
-  --name spark-master
-  --hostname spark-master
-  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)>
-  -p 7077:7077
-  -p 8080:8080  
-  middleware/spark-master:2.4.4-hadoop2.
+docker run \
+  --name spark-master \
+  --hostname spark-master \
+  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)> \
+  -p 7077:7077 \
+  -p 8080:8080 \  
+  middleware/spark-master:2.4.4-hadoop2.7
 ```
 
 **Spark Worker**
 
 ```shell
-docker run
-  --name spark-worker
-  --hostname spark-worker
-  --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)>
-  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)>
-  -p 8081:8081
+docker run \
+  --name spark-worker \
+  --hostname spark-worker \
+  --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)> \
+  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)> \
+  -p 8081:8081 \
   middleware/spark-worker:2.4.4-hadoop2.7
 ```
 
 **Hadoop**
 
 ```shell
-docker run
-  --name hadoop
-  --hostname hadoop
-  --env HADOOP_HOST=hadoop
-  --env HADOOP_PORT=9000
-  -p 50070:50070
-  -p 9000:9000
+docker run \
+  --name hadoop \
+  --hostname hadoop \
+  --env HADOOP_HOST=hadoop \
+  --env HADOOP_PORT=9000 \
+  -p 50070:50070 \
+  -p 9000:9000 \
   middleware/spark-hadoop:2.4.4-hadoop2.7
 ```
 
 **Spark Submit**
 
 ```shell
-docker run
-  --name spark-app
-  --hostname spark-app
-  --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)>
-  --env SPARK_MASTER_PORT=7077
-  --env JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv
-  --env HADOOP_HOST=<IPv4 address (e.g., 192.168.99.103)>
-  --env HADOOP_PORT=9000
-  middleware/spark-app:latest
-  target/<JAR NAME>.jar
+docker run \
+  --name spark-app \
+  --hostname spark-app \
+  --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)> \
+  --env SPARK_MASTER_PORT=7077 \
+  --env JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv \
+  --env HADOOP_HOST=<IPv4 address (e.g., 192.168.99.103)> \
+  --env HADOOP_PORT=9000 \
+  middleware/spark-app:latest \
+  target/<JAR NAME>.jar \
   --question q3 q3mean --show 30
 ```
