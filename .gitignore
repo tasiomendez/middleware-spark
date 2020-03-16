@@ -3,6 +3,9 @@ files/
 
 # Eclipse.gitignore
 
+.classpath
+.project
+
 .metadata
 bin/
 tmp/
