@@ -4,12 +4,15 @@ WORKDIR /usr/src/app
 
 ENV SPARK_MASTER_HOST localhost
 ENV SPARK_MASTER_PORT 7077
-ENV JAVA_PROJECT_DATASET files/dataset.csv
+ENV SPARK_DEPLOY_MODE client
 
-RUN export JAVA_PROJECT_NAME=$(mvn exec:exec -Dexec.executable=echo -Dexec.args='${project.name}' -q)
-RUN export JAVA_PROJECT_VERSION=$(mvn exec:exec -Dexec.executable=echo -Dexec.args='${project.version}' -q)
+ENV HADOOP_HOST hadoop
+ENV HADOOP_PORT 9000
+
+ENV JAVA_JAR_MAIN_CLASS my.main.Application
+ENV JAVA_PROJECT_DATASET files/dataset.csv
 
 COPY entrypoint.sh /usr/local/bin
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["application.jar"]
+CMD ["target/application.jar"]
