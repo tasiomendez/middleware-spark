@@ -127,6 +127,7 @@ docker run \
   --hostname spark-app \
   --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)> \
   --env SPARK_MASTER_PORT=7077 \
+  --env JAVA_JAR_MAIN_CLASS=<Java Main Class> \
   --env JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv \
   --env HADOOP_HOST=<IPv4 address (e.g., 192.168.99.103)> \
   --env HADOOP_PORT=9000 \
