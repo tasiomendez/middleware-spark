@@ -34,10 +34,9 @@ services:
     environment:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_MASTER_PORT=7077
+      - SPARK_DEPLOY_MODE=client
       - JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv
       - JAVA_JAR_MAIN_CLASS=it.polimi.middleware.spark.CarAccidents
-      - HADOOP_HOST=hadoop
-      - HADOOP_PORT=9000
     depends_on:
       - spark-master
       - hadoop
