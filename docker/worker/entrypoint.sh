@@ -9,21 +9,15 @@ fi
 
 . "$SPARK_HOME/bin/load-spark-env.sh"
 
-if [ "$SPARK_MASTER_PORT" = "" ]; then
-  SPARK_MASTER_PORT=7077
-fi
-
-if [ "$SPARK_MASTER_HOST" = "" ]; then
-  SPARK_MASTER_HOST=$(hostname -I)
-fi
-
 if [ "$SPARK_WORKER_HOST" = "" ]; then
   SPARK_WORKER_HOST=$(hostname -I)
 fi
 
-if [ "$SPARK_WORKER_WEBUI_PORT" = "" ]; then
-  SPARK_WORKER_WEBUI_PORT=8081
+if [ "$SPARK_DRIVER_HOST" = "" ]; then
+  SPARK_DRIVER_HOST=$(hostname -I)
 fi
+
+sed -i "s|{{SPARK_DRIVER_HOST}}|$SPARK_DRIVER_HOST|g" $SPARK_CONF_DIR/spark-defaults.conf
 
 $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker \
   --host $SPARK_WORKER_HOST \

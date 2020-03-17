@@ -1,9 +1,7 @@
 FROM middleware/spark-base:2.4.4-hadoop2.7
 
-RUN mkdir -p /usr/spark-conf
-COPY spark-defaults.conf /usr/spark-conf
-
-ENV SPARK_CONF_DIR=/usr/spark-conf
+COPY spark-defaults.conf .
+RUN mv spark-defaults.conf $SPARK_HOME/conf/
 
 ENV SPARK_MASTER_HOST localhost
 ENV SPARK_MASTER_PORT 7077
