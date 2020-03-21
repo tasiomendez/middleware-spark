@@ -1,8 +1,7 @@
 version: '3'
 services:
   spark-master:
-    build: docker/master
-    image: middleware/spark-master:2.4.4-hadoop2.7
+    image: tasiomendez/spark-master:2.4.4-hadoop2.7.7
     hostname: spark-master
     environment:
       - SPARK_PUBLIC_DNS=192.168.99.103
@@ -14,8 +13,7 @@ services:
       - 8080:8080
 
   spark-worker:
-    build: docker/worker
-    image: middleware/spark-worker:2.4.4-hadoop2.7
+    image: tasiomendez/spark-worker:2.4.4-hadoop2.7.7
     hostname: spark-worker
     environment:
       - SPARK_PUBLIC_DNS=192.168.99.103
@@ -43,8 +41,7 @@ services:
              "--question q3mean --show 30"]
 
   hadoop:
-    build: docker/hadoop
-    image: middleware/spark-hadoop:2.4.4-hadoop2.7
+    image: tasiomendez/spark-hadoop:2.4.4-hadoop2.7.7
     hostname: hadoop
     environment:
       - HADOOP_HOST=hadoop
