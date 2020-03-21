@@ -41,16 +41,6 @@ In this case, we provide a Spark Cluster in client mode using Spark's Standalone
 
 ### Getting started
 
-The folder `docker` contains all the docker images which are needed to run. The image `base` contains is used for building the remainder images, it contains all the necessary dependencies and Spark.
-
-```shell
-cd docker
-sh build.sh base      # Build base image
-sh build.sh master    # Build master image
-sh build.sh worker    # Build worker image
-sh build.sh hadoop    # Build hadoop image
-```
-
 To deploy a simple Spark standalone cluster, run the following command.
 
 ```shell
@@ -65,61 +55,28 @@ docker-compose up spark-master spark-worker hadoop --scale spark-worker=X
 
 ### Submitting jobs
 
-The image `submit` provides a template for submitting jobs to Spark in a simple way. Thus, for building the image which will submit the job to the Spark's Standalone cluster, run the following commands.
+The image for this repository provides a simple way for submitting the job to the Spark's Standalone cluster, run the following commands.
 
 ```shell
-# Build images
-cd docker && sh build.sh submit
-docker build -t middleware/spark-app:latest .
+docker-compose up spark-app
 ```
 
+If some changes are made in the code, it is needed to rebuild the image. It could be done
+at the same time as the deployment by using the following command.
+
 ```shell
-# Submit job
-docker-compose up spark-app
+docker-compose up --build spark-app
+```
+
+If the user wants to build the image without running it, the following command can be used.
+
+```shell
+docker build -t middleware/spark-app .
 ```
 
 ### Deployment wihtout Compose
 
-For running spark without Docker Compose, i.e. running images in different machines, the following commands allow to initialize the containers.
-
-**Spark Master**
-
-```shell
-docker run \
-  --name spark-master \
-  --hostname spark-master \
-  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)> \
-  -p 7077:7077 \
-  -p 8080:8080 \  
-  middleware/spark-master:2.4.4-hadoop2.7
-```
-
-**Spark Worker**
-
-```shell
-docker run \
-  --name spark-worker \
-  --hostname spark-worker \
-  --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)> \
-  --env SPARK_PUBLIC_DNS=<IPv4 address (e.g., 192.168.99.103)> \
-  -p 8081:8081 \
-  middleware/spark-worker:2.4.4-hadoop2.7
-```
-
-**Hadoop**
-
-```shell
-docker run \
-  --name hadoop \
-  --hostname hadoop \
-  --env HADOOP_HOST=hadoop \
-  --env HADOOP_PORT=9000 \
-  -p 50070:50070 \
-  -p 9000:9000 \
-  middleware/spark-hadoop:2.4.4-hadoop2.7
-```
-
-**Spark Submit**
+For running spark without Docker Compose, i.e. submitting the job to a remote Spark's Standalone cluster, the next command could be used.
 
 ```shell
 docker run \
