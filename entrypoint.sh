@@ -10,7 +10,7 @@ fi
 
 echo '>>' connecting to Master @ spark://$SPARK_MASTER_HOST:$SPARK_MASTER_PORT
 echo '>>' files submited @ hdfs://$HADOOP_HOST:$HADOOP_PORT
-echo '>>' deploy mode. $SPARK_DEPLOY_MODE
+echo '>>' deploy mode: $SPARK_DEPLOY_MODE
 echo '>>' jar: $JAVA_JAR_FILENAME
 echo '>>' class: $JAVA_JAR_MAIN_CLASS
 
