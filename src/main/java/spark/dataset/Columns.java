@@ -1,4 +1,4 @@
-package it.polimi.middleware.spark.dataset;
+package spark.dataset;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package it.polimi.middleware.spark.dataset;
+package spark.dataset;
 
 import static org.apache.spark.sql.functions.count;
 import static org.apache.spark.sql.functions.date_sub;

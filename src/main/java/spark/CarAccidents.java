@@ -1,4 +1,5 @@
-package it.polimi.middleware.spark;
+package spark;
+
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -11,7 +12,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
 
-import it.polimi.middleware.spark.dataset.Dataframe;
+import spark.dataset.Dataframe;
 
 public class CarAccidents {
 	
