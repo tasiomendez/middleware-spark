@@ -37,7 +37,7 @@ The deployment is made using [Docker](https://docs.docker.com/engine/docker-over
 - Client mode. The driver is launched in the same process as the client that submits the application.
 - Cluster mode. The driver is launched from one of the worker processes inside the cluster, and the client process exits as soon as it fulfills its resposibility of submitting the application without waiting for the aplication to finish.
 
-In this case, we provide a Spark Cluster in client mode using Spark's Standalone mode. Spark's standalone mode offers a web-based user interface to monitor the cluster. The master and each worker has its own web UI that shows cluster and job statistics.
+In this case, we provide a Spark Cluster using the Spark's Standalone mode. Spark's standalone mode offers a web-based user interface to monitor the cluster. The master and each worker has its own web UI that shows cluster and job statistics.
 
 ### Getting started
 
@@ -74,7 +74,7 @@ If the user wants to build the image without running it, the following command c
 docker build -t middleware/spark-app .
 ```
 
-### Deployment wihtout Compose
+### Deployment without Compose
 
 For running spark without Docker Compose, i.e. submitting the job to a remote Spark's Standalone cluster, the next command could be used.
 
@@ -84,6 +84,7 @@ docker run \
   --hostname spark-app \
   --env SPARK_MASTER_HOST=<IPv4 address (e.g., 192.168.99.103)> \
   --env SPARK_MASTER_PORT=7077 \
+  --env SPARK_CLUSTER_MODE=client \
   --env JAVA_JAR_MAIN_CLASS=<Java Main Class> \
   --env JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv \
   --env HADOOP_HOST=<IPv4 address (e.g., 192.168.99.103)> \
