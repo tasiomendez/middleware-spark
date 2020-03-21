@@ -33,7 +33,7 @@ services:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_MASTER_PORT=7077
       - JAVA_PROJECT_DATASET=files/NYPD_Motor_Vehicle_Collisions.csv
-      - JAVA_JAR_MAIN_CLASS=it.polimi.middleware.spark.CarAccidents
+      - JAVA_JAR_MAIN_CLASS=spark.CarAccidents
     depends_on:
       - spark-master
       - hadoop
